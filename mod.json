@@ -4,7 +4,7 @@ id: "elmendezz.infinite"
 developer: "elmendezz"
 description: "Un mod de Geode para editar tus orbes, diamantes, estrellas, moons, demons, etc."
 repository: "https://github.com/elmendezz/infiNite"
-geode: "1.5.4"
+geode: "v3.1.0"
 gd: {
     win: "2.206",
     android: "2.206",
