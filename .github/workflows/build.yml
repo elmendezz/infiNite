@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - master
+
   workflow_dispatch:
 
 jobs:
@@ -13,6 +14,7 @@ jobs:
 
     strategy:
       fail-fast: false
+
       matrix:
         config:
           - name: Windows
@@ -41,39 +43,20 @@ jobs:
         id: build
         uses: geode-sdk/build-geode-mod@main
         with:
-          # Geode SDK utilizado por el mod
-          sdk: v3.1.0
+          # Usa exactamente la versión declarada en mod.json
+          sdk: given
 
-          # CLI estable compatible
+          # CLI
           cli: v3.8.0
 
-          # IMPORTANTE:
-          # Fuerza el target correcto
+          # Target de la matriz
           target: ${{ matrix.config.target }}
 
-          # Usa los bindings oficiales de Geode
-          bindings: geode-sdk/bindings
-
-          # Evita depender del main actual de bindings.
-          #
-          # Para GD 2.206 debe utilizarse una revisión de bindings
-          # correspondiente a esa versión.
-          #
-          # Si el SDK 3.1.0 ya resuelve correctamente 2.206,
-          # dejamos bindings-ref vacío.
-          bindings-ref: ""
-
-          # Necesario para combinar después
-          combine: true
-
-          # Android mínimo compatible
+          # Android
           android-min-sdk: 23
 
-          # Evita símbolos innecesarios en el paquete
-          export-symbols: false
-
-          # LTO activado
-          use-lto: true
+          # Combinar posteriormente los builds
+          combine: true
 
   package:
     name: Package Mod
@@ -84,7 +67,10 @@ jobs:
       - build
 
     steps:
-      - name: Package Geode Mod
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Combine Geode builds
         uses: geode-sdk/build-geode-mod/combine@main
         id: combine
 
