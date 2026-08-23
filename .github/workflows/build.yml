@@ -9,53 +9,87 @@ on:
 
 jobs:
   build:
+    name: Build ${{ matrix.config.name }}
+
     strategy:
       fail-fast: false
       matrix:
         config:
           - name: Windows
             os: windows-latest
-            target: Win
+            target: Win64
+
           - name: macOS
             os: macos-latest
             target: MacOS
+
           - name: Android32
             os: ubuntu-latest
             target: Android32
+
           - name: Android64
             os: ubuntu-latest
             target: Android64
 
-    name: Build ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Build Geode Mod
+        id: build
         uses: geode-sdk/build-geode-mod@main
         with:
+          # Geode SDK utilizado por el mod
           sdk: v3.1.0
+
+          # CLI estable compatible
           cli: v3.8.0
+
+          # IMPORTANTE:
+          # Fuerza el target correcto
           target: ${{ matrix.config.target }}
+
+          # Usa los bindings oficiales de Geode
+          bindings: geode-sdk/bindings
+
+          # Evita depender del main actual de bindings.
+          #
+          # Para GD 2.206 debe utilizarse una revisión de bindings
+          # correspondiente a esa versión.
+          #
+          # Si el SDK 3.1.0 ya resuelve correctamente 2.206,
+          # dejamos bindings-ref vacío.
+          bindings-ref: ""
+
+          # Necesario para combinar después
           combine: true
+
+          # Android mínimo compatible
+          android-min-sdk: 23
+
+          # Evita símbolos innecesarios en el paquete
+          export-symbols: false
+
+          # LTO activado
+          use-lto: true
 
   package:
     name: Package Mod
+
     runs-on: ubuntu-latest
-    needs: build
+
+    needs:
+      - build
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
       - name: Package Geode Mod
         uses: geode-sdk/build-geode-mod/combine@main
-        id: build
+        id: combine
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: infiNite-mod
-          path: ${{ steps.build.outputs.build-output }}
+          path: ${{ steps.combine.outputs.build-output }}
