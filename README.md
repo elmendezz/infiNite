@@ -4,20 +4,17 @@ Este mod de Geode para Geometry Dash te permite modificar las estadísticas loca
 
 ## Archivos del Proyecto
 
-- `mod.json`: Configuración y metadatos (`elmendezz.infinite`).
+- `mod.json`: Configuración y metadatos (`elmendezz.infinite`), incluyendo compatibilidad con Windows, Android, macOS e iOS.
 - `CMakeLists.txt`: Script de compilación CMake.
 - `src/main.cpp`: Código fuente C++ del mod.
-- `.github/workflows/build.yml`: Flujo de GitHub Actions listo para compilar automáticamente en Windows, Android y macOS.
+- `.github/workflows/build.yml`: Flujo de GitHub Actions listo para compilar automáticamente en Windows, Android (32/64 bits), macOS e iOS.
 
-## Instrucciones para publicar en tu repositorio GitHub
+## Publicar cambios
 
-Ejecuta los siguientes comandos en tu terminal dentro de la carpeta del proyecto:
+Ejecuta los siguientes comandos en tu terminal dentro de esta carpeta:
 
 ```bash
-git init
 git add .
-git commit -m "Initial commit - infiNite Geode Mod"
-git branch -M main
-git remote add origin https://github.com/elmendezz/infiNite.git
-git push -u origin main
+git commit -m "Add infiNite mod source code and GitHub Actions workflow with iOS support"
+git push origin main
 ```
