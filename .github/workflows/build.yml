@@ -5,7 +5,6 @@ on:
     branches:
       - main
       - master
-
   workflow_dispatch:
 
 jobs:
@@ -43,10 +42,7 @@ jobs:
         id: build
         uses: geode-sdk/build-geode-mod@main
         with:
-          sdk: v3.1.0
-          cli: v3.8.0
-          bindings-ref: main
-          configure-args: "-DGEODE_GD_VERSION=2.206"
+          sdk: given
           target: ${{ matrix.config.target }}
           combine: true
 
