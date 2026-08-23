@@ -1,12 +1,14 @@
-name: "infiNite"
-version: "1.0.0"
-id: "elmendezz.infinite"
-developer: "elmendezz"
-description: "Un mod de Geode para editar tus orbes, diamantes, estrellas, moons, demons, etc."
-repository: "https://github.com/elmendezz/infiNite"
-geode: "v3.1.0"
-gd: {
-    win: "2.206",
-    android: "2.206",
-    mac: "2.206"
+{
+    "geode": "v3.1.0",
+    "gd": {
+        "win": "2.206",
+        "android": "2.206",
+        "mac": "2.206"
+    },
+    "id": "elmendezz.infinite",
+    "name": "infiNite",
+    "version": "1.0.0",
+    "developer": "elmendezz",
+    "description": "Un mod de Geode para editar tus orbes, diamantes, estrellas, moons, demons, etc.",
+    "repository": "https://github.com/elmendezz/infiNite"
 }
