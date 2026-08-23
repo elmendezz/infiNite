@@ -39,25 +39,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Geode CLI
-        uses: geode-sdk/cli@main
-        with:
-          version: v3.8.0
-
-      - name: Install Geode SDK
-        shell: bash
-        run: |
-          geode sdk install v3.1.0
-          geode sdk install-binaries
-
-      - name: Show installed SDK
-        shell: bash
-        run: |
-          geode --version
-          geode sdk list
-          geode sdk info v3.1.0 || true
-
       - name: Build Geode Mod
+        id: build
         uses: geode-sdk/build-geode-mod@main
         with:
           sdk: v3.1.0
