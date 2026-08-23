@@ -39,23 +39,30 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Install Geode CLI
+        uses: geode-sdk/cli@main
+        with:
+          version: v3.8.0
+
+      - name: Install Geode SDK
+        shell: bash
+        run: |
+          geode sdk install v3.1.0
+          geode sdk install-binaries
+
+      - name: Show installed SDK
+        shell: bash
+        run: |
+          geode --version
+          geode sdk list
+          geode sdk info v3.1.0 || true
+
       - name: Build Geode Mod
-        id: build
         uses: geode-sdk/build-geode-mod@main
         with:
-          # Usa exactamente la versión declarada en mod.json
-          sdk: given
-
-          # CLI
+          sdk: v3.1.0
           cli: v3.8.0
-
-          # Target de la matriz
           target: ${{ matrix.config.target }}
-
-          # Android
-          android-min-sdk: 23
-
-          # Combinar posteriormente los builds
           combine: true
 
   package:
@@ -63,14 +70,13 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    needs:
-      - build
+    needs: build
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Combine Geode builds
+      - name: Combine builds
         uses: geode-sdk/build-geode-mod/combine@main
         id: combine
 
